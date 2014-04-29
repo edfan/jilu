@@ -1,0 +1,17 @@
+<p>
+  <strong>Assignment Name:</strong>
+  <%= @assignment.name %>
+</p>
+
+<p>
+  <strong>Assignment Description:</strong>
+  <%= @assignment.description %>
+</p>
+
+<p>
+  <strong>Submission Description:</strong>
+  <%= @submission.description %>
+</p>
+
+<%= link_to 'Edit Submission', edit_submission_path(@submission) %> |
+<%= link_to 'Back', assignment_path(@assignment) %>

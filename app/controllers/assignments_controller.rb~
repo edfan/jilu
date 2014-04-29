@@ -1,0 +1,40 @@
+class AssignmentsController < ApplicationController
+
+  def create
+    @group = Group.find(params[:group_id])
+    @assignment = @group.assignments.create(params[:assignment].permit(:name, :description))
+    
+    redirect_to url_for(@group)
+  end
+
+  def show
+    @assignment = Assignment.find(params[:id])
+  end
+
+  def index
+    @assignments = Assignment.all
+  end
+
+  def edit
+    @assignment = Assignment.find(params[:id])
+  end
+
+  def update
+    @assignment = Assignment.find(params[:id])
+
+    if @assignment.update(params[:assignment].permit(:name, :description))
+      redirect_to @assignment
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @group = Group.find(params[:group_id])
+    @assignment = Assignment.find(params[:id])
+    @assignment.destroy
+
+    redirect_to url_for(@group)
+  end
+
+end

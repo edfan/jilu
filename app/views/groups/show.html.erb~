@@ -1,0 +1,71 @@
+<p>
+  <strong>Teacher First Name:</strong>
+  <%= @teacher.first_name %>
+</p>
+
+<p>
+  <strong>Teacher Last Name:</strong>
+  <%= @teacher.last_name %>
+</p>
+
+<p>
+  <strong>Teacher Password:</strong>
+  <%= @teacher.password %>
+</p>
+
+<p>
+  <strong>Class Name:</strong>
+  <%= @group.name %>
+</p>
+
+<p>
+  <strong>Class Description:</strong>
+  <%= @group.description %>
+</p>
+
+<h2>Assignments</h2>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+
+  <% @assignments.each do |assignment| %>
+
+  <tr>
+    <td><%= assignment.name %></td>
+    <td><%= assignment.description %></td>
+    <td><%= link_to 'Show', assignment %></td>
+    <td><%= link_to 'Edit', edit_assignment_path(assignment) %></td>
+    <td><%= link_to 'Destroy', assignment_path(assignment), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+  </tr>
+
+  <% end %>
+</table><br>
+<h2>Students</h2>
+<table>
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Grade</th>
+  </tr>
+
+  <% @students.each do |student| %>
+
+  <tr>
+    <td><%= student.first_name %></td>
+    <td><%= student.last_name %></td>
+    <td><%= student.grade %></td>
+    <td><%= link_to 'Show', student %></td>
+    <td><%= link_to 'Edit', edit_student_path(student) %></td>
+    <td><%= link_to 'Destroy', student_path(student), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+  </tr>
+
+  <% end %>
+</table>
+<br>
+<%= link_to 'New Assignment', new_group_assignment_path(@group) %><br>
+<%= link_to 'New Student', new_group_student_path(@group) %><br>
+<br>
+<%= link_to 'Edit Class', edit_group_path(@group) %> |
+<%= link_to 'Back', url_for(@teacher) %>
