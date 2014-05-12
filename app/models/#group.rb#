@@ -1,6 +1,0 @@
-class Group < ActiveRecord::Base
-
-  belongs_to :teacher, :group
-  has_many :students
-
-end
