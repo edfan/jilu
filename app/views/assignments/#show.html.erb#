@@ -29,7 +29,6 @@
   <tr>
     <td><%= submission.description %></td>
     <td><%= link_to 'Show', submission %></td>
-    <td><%= link_to 'Edit', edit_submi
     <td><%= link_to 'Destroy', submission_path(submission), method: :delete, data: {confirm: 'Are you sure?'\
 } %></td>
   </tr>
