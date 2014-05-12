@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140421155510) do
+ActiveRecord::Schema.define(version: 20140512183054) do
 
   create_table "assignments", force: true do |t|
     t.string   "name"
@@ -19,6 +19,10 @@ ActiveRecord::Schema.define(version: 20140421155510) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "group_id"
+    t.string   "recording_file_name"
+    t.string   "recording_content_type"
+    t.integer  "recording_file_size"
+    t.datetime "recording_updated_at"
   end
 
   add_index "assignments", ["group_id"], name: "index_assignments_on_group_id"
@@ -52,6 +56,10 @@ ActiveRecord::Schema.define(version: 20140421155510) do
     t.datetime "updated_at"
     t.integer  "assignment_id"
     t.integer  "student_id"
+    t.string   "recording_file_name"
+    t.string   "recording_content_type"
+    t.integer  "recording_file_size"
+    t.datetime "recording_updated_at"
   end
 
   add_index "submissions", ["assignment_id"], name: "index_submissions_on_assignment_id"

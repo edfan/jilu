@@ -13,7 +13,7 @@ class SubmissionsController < ApplicationController
     else
       render 'new'
     end
-  end
+ end
 
   def show
     @submission = Submission.find(params[:id])
@@ -42,7 +42,7 @@ class SubmissionsController < ApplicationController
 
   private
   def submission_params
-    params.require(:submission).permit(:description)
+    params.require(:submission).permit(:description, :recording)
   end
 
 end

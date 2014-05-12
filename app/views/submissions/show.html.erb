@@ -13,5 +13,11 @@
   <%= @submission.description %>
 </p>
 
+<audio controls>
+  <source src = "<%= @submission.recording.url %>">
+</audio>
+
+<br><br>
+
 <%= link_to 'Edit Submission', edit_submission_path(@submission) %> |
 <%= link_to 'Back', assignment_path(@assignment) %>
