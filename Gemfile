@@ -45,3 +45,4 @@ end
 # gem 'debugger', group: [:development, :test]
 
 gem "paperclip", "~> 4.1"
+gem "bcrypt", :require => "bcrypt"

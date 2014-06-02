@@ -15,4 +15,5 @@
 /log/*.log
 /tmp
 
+# Ignore default recording location (for paperclip).
 /public/system

@@ -1,8 +1,0 @@
-<p>
-  <strong>First Name:</strong>
-  <%= 
-
-</table>
-
-<%= link_to 'Edit Teacher', edit_teacher_path(@teacher) %> |
-<%= link_to 'Back', teachers_path %>

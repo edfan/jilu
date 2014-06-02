@@ -1,6 +1,14 @@
 Jilu::Application.routes.draw do
+  get "sessions/new"
+  get "teachersessions/new"
   get "welcome/index"
   root "welcome#index"
+
+  get "sign_up" => "teachers#new", :as => "sign_up"
+  get "log_in" => "sessions#new", :as => "log_in"
+
+
+  resources :sessions
   
   shallow do
     resources :teachers do

@@ -1,0 +1,4 @@
+class Login < ActiveRecord::Migration
+  def change
+  end
+end

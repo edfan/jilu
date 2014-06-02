@@ -18,6 +18,7 @@ class AssignmentsController < ApplicationController
   def show
     @assignment = Assignment.find(params[:id])
     @group = Group.find(@assignment.group_id)
+    @teacher = Teacher.find(@group.teacher_id)
     @submissions = @assignment.submissions.all(params[:assignment_id])
   end
 

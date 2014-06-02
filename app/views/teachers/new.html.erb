@@ -1,4 +1,40 @@
 <h1>New Teacher</h1>
 
-<%= render 'form' %>
+<%= form_for @teacher do |f| %>                                                                                                                                                                    
+  <% if @teacher.errors.any? %>                                                                                                                                                                     
+  <div id="error_explanation">                                                                                                                                                                      
+    <h2><%= pluralize(@teacher.errors.count, "error") %> prohibited                                                                                                                                 
+      this teacher from being saved:</h2>                                                                                                                                                           
+    <ul>                                                                                                                                                                                            
+    <% @teacher.errors.full_messages.each do |msg| %>                                                                                                                                               
+      <li><%= msg %></li>                                                                                                                                                                           
+    <% end %>                                                                                                                                                                                       
+    </ul>                                                                                                                                                                                           
+  </div>                                                                                                                                                                                            
+  <% end %>                                                       
+                                                                                                                                                                                                    
+  <p>                                                                                                                                                                                               
+    <%= f.label :name %><br>                                                                                                                                                                   
+    <%= f.text_field :name %>                                                                                                                                                                  
+  </p>                
+
+  <p>
+    <%= f.label :email %><br>
+    <%= f.text_field :email %>
+  </p>
+                                                                                                                                                                                                    
+  <p>                                                                                                                                                                                               
+    <%= f.label :password %><br>                                                                                                                                                                    
+    <%= f.password_field :password %>                                                                                                                                                              
+  </p>                                                                                                                                                                                              
+
+  <p>
+    <%= f.label :password_confirmation %><br>
+    <%= f.password_field :password_confirmation %>
+  </p>
+                                                                                                                                                                                                    
+  <p>                                                                                                                                                                                               
+    <%= f.submit %>                                                                                                                                                                                 
+  </p>                                                                                                                                                                                              
+<% end %>              
 <%= link_to 'Back', teachers_path %>

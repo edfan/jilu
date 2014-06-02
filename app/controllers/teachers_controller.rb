@@ -7,8 +7,11 @@ class TeachersController < ApplicationController
   def create
     @teacher = Teacher.new(post_params)
 
-    @teacher.save
-    redirect_to @teacher
+    if @teacher.save
+      redirect_to root_url, :notice => "Signed up!"
+    else
+      render "new"
+    end
   end
 
   def show
@@ -40,7 +43,7 @@ class TeachersController < ApplicationController
 
   private
   def post_params
-    params.require(:teacher).permit(:first_name, :last_name, :password, :password_hash)
+    params.require(:teacher).permit(:name, :email, :password_salt, :password_hash)
   end
 
 end
