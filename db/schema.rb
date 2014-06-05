@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140605142845) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "assignments", force: true do |t|
     t.string   "name"
     t.text     "description"
@@ -21,7 +24,7 @@ ActiveRecord::Schema.define(version: 20140605142845) do
     t.integer  "group_id"
   end
 
-  add_index "assignments", ["group_id"], name: "index_assignments_on_group_id"
+  add_index "assignments", ["group_id"], name: "index_assignments_on_group_id", using: :btree
 
   create_table "groups", force: true do |t|
     t.string   "name"
@@ -31,7 +34,7 @@ ActiveRecord::Schema.define(version: 20140605142845) do
     t.integer  "teacher_id"
   end
 
-  add_index "groups", ["teacher_id"], name: "index_groups_on_teacher_id"
+  add_index "groups", ["teacher_id"], name: "index_groups_on_teacher_id", using: :btree
 
   create_table "students", force: true do |t|
     t.string   "password_hash"
@@ -44,7 +47,7 @@ ActiveRecord::Schema.define(version: 20140605142845) do
     t.string   "name"
   end
 
-  add_index "students", ["group_id"], name: "index_students_on_group_id"
+  add_index "students", ["group_id"], name: "index_students_on_group_id", using: :btree
 
   create_table "submissions", force: true do |t|
     t.text     "description"
@@ -59,8 +62,8 @@ ActiveRecord::Schema.define(version: 20140605142845) do
     t.string   "name"
   end
 
-  add_index "submissions", ["assignment_id"], name: "index_submissions_on_assignment_id"
-  add_index "submissions", ["student_id"], name: "index_submissions_on_student_id"
+  add_index "submissions", ["assignment_id"], name: "index_submissions_on_assignment_id", using: :btree
+  add_index "submissions", ["student_id"], name: "index_submissions_on_student_id", using: :btree
 
   create_table "teachers", force: true do |t|
     t.datetime "created_at"
