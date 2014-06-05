@@ -16,7 +16,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+gem 'node'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -33,7 +33,7 @@ group :doc do
 end
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.1.2'
+gem 'bcrypt-ruby', '~> 3.1.2'
 
 # Use unicorn as the app server
 # gem 'unicorn'
@@ -44,5 +44,4 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem "paperclip", "~> 4.1"
-gem "bcrypt", :require => "bcrypt"
+gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"

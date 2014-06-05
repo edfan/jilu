@@ -16,9 +16,6 @@ Jilu::Application.routes.draw do
         resources :assignments do
           resources :submissions
         end
-        resources :students do
-          resources :submissions
-        end
       end
     end
   end

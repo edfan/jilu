@@ -1,17 +1,10 @@
-<p>
-  <strong>Name:</strong>
-  <%= @teacher.name %>
-</p>
+<h1><%= @teacher.name %></h1>
 
 <p>
   <strong>Email:</strong>
   <%= @teacher.email %>
 </p>
 
-<p>
-  <strong>Password:</strong>
-  <%= @teacher.password_hash %>
-</p>
 
 <h2>Classes</h2>
 <table>
@@ -25,7 +18,7 @@
     <td><%= group.name %></td>                                                                                                                                                                      
     <td><%= group.description %></td>                                                                                                                                                               
     <td><%= link_to 'Show', group %></td>                                                                                                                                                     
-    <td><%= link_to 'Destroy', group_path(group), method: :delete, data: {confirm: 'Are you sure?'} %></td>                                                                                         
+    <!-- <td><%= link_to 'Destroy', group_path(group), method: :delete, data: {confirm: 'Are you sure?'} %></td> -->                                                                                         
   </tr>                                                                                                                                                                                             
  
   <% end %>

@@ -18,11 +18,28 @@
 
   <% end %>
 </table><br>
+
 <h2>Students</h2>
 <table>
   <tr>
-    <th>First Name</th>
-    <th>Last Name</th>
+    <th>Name</th>
+  </tr>
+ 
+  <% begin %>
+  <% @submissions.each do |submission| %>
+  <tr>
+    <td><%= submission.name %></td>
+  </tr>
+  <% end %>
+  <% rescue %>
+  <% end %>
+
+</table>
+<!--
+<h2>Students</h2>
+<table>
+  <tr>
+    <th>Name</th>
     <th>Grade</th>
   </tr>
 
@@ -32,15 +49,16 @@
     <td><%= student.name %></td>
     <td><%= student.grade %></td>
     <td><%= link_to 'Show', student %></td>
-    <!-- <td><%= link_to 'Edit', edit_student_path(student) %></td>
-    <td><%= link_to 'Destroy', student_path(student), method: :delete, data: {confirm: 'Are you sure?'} %></td> -->
+    <td><%= link_to 'Edit', edit_student_path(student) %></td>
+    <td><%= link_to 'Destroy', student_path(student), method: :delete, data: {confirm: 'Are you sure?'} %></td>
   </tr>
 
   <% end %>
 </table>
+-->
+
 <br>
 <%= link_to 'New Assignment', new_group_assignment_path(@group) %><br>
-<%= link_to 'New Student', new_group_student_path(@group) %><br>
 <br>
 <%= link_to 'Edit Class', edit_group_path(@group) %> |
 <%= link_to 'Back', url_for(@teacher) %>

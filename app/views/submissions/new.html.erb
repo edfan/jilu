@@ -3,175 +3,97 @@
 <%= render 'form' %>
 <%= link_to 'Back', @assignment %>
 
-<canvas id="canvas" width="800" height="256" ></canvas>
+<p id="output"></p>
+
+<!--
+<button onclick="startRecording(this)">Record</button>
+<button onclick="stopRecording(this);" disabled>Stop and Download</button>
  
-<p id="controls">
-  <input type="button" id="start_button" value="Record">
-  &nbsp; &nbsp;
-  <input type="button" id="stop_button" value="Stop and Download">
-</p>
- 
-<!-- ----------------------------------------------------- -->
- 
-<style>
-    #canvas {
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-        background-color: black;
-    }
-    #controls {
-        text-align: center;
-    }
-    #start_button, #stop_button {
-        font-size: 16pt;
-    }
-</style>
- 
-<!-- ----------------------------------------------------- -->
- 
- 
-<script type="text/javascript">
- 
-    // Hack to handle vendor prefixes
-    navigator.getUserMedia = ( navigator.getUserMedia ||
-                               navigator.webkitGetUserMedia ||
-                               navigator.mozGetUserMedia ||
-                               navigator.msGetUserMedia);
- 
-    window.requestAnimFrame = (function(){
-      return  window.requestAnimationFrame       ||
-              window.webkitRequestAnimationFrame ||
-              window.mozRequestAnimationFrame    ||
-              function(callback, element){
-                window.setTimeout(callback, 1000 / 60);
-              };
-    })();
- 
-    window.AudioContext = (function(){
-        return  window.webkitAudioContext || window.AudioContext || window.mozAudioContext;
-    })();
- 
-    // Global Variables for Audio
-    var audioContext;
-    var analyserNode;
-    var javascriptNode;
-    var sampleSize = 1024;  // number of samples to collect before analyzing
-                            // decreasing this gives a faster sonogram, increasing it slows it down
-    var amplitudeArray;     // array to hold frequency data
-    var audioStream;
- 
-    // Global Variables for Drawing
-    var column = 0;
-    var canvasWidth  = 800;
-    var canvasHeight = 256;
-    var ctx;
- 
-    $(document).ready(function() {
-        ctx = $("#canvas").get()[0].getContext("2d");
- 
-        try {
-            audioContext = new AudioContext();
-        } catch(e) {
-            alert('Web Audio API is not supported in this browser');
-        }
- 
-        // When the Start button is clicked, finish setting up the audio nodes, and start
-        // processing audio streaming in from the input device
-        $("#start_button").click(function(e) {
-            e.preventDefault();
-            clearCanvas();
- 
-            // get the input audio stream and set up the nodes
-            try {
-                navigator.getUserMedia(
-                  { video: false,
-                    audio: true},
-                  setupAudioNodes,
-                  onError);
-            } catch (e) {
-                alert('webkitGetUserMedia threw exception :' + e);
-            }
-        });
- 
-        // Stop the audio processing
-        $("#stop_button").click(function(e) {
-            e.preventDefault();
-            javascriptNode.onaudioprocess = null;
-            if(audioStream) audioStream.stop();
-            if(sourceNode)  sourceNode.disconnect();
-        });
+ <h2>Recordings</h2>
+  <ul id="recordingslist"></ul>
+  
+  <h2>Log</h2>
+  <pre id="log"></pre>
+
+  <script>
+  function __log(e, data) {
+    log.innerHTML += "\n" + e + " " + (data || '');
+  }
+
+  var audio_context;
+  var recorder;
+
+  function startUserMedia(stream) {
+    var input = audio_context.createMediaStreamSource(stream);
+    __log('Media stream created.' );
+  __log("input sample rate " +input.context.sampleRate);
+    
+    input.connect(audio_context.destination);
+    __log('Input connected to audio context destination.');
+    
+    recorder = new Recorder(input);
+    __log('Recorder initialised.');
+  }
+
+  function startRecording(button) {
+    recorder && recorder.record();
+    button.disabled = true;
+    button.nextElementSibling.disabled = false;
+    __log('Recording...');
+  }
+
+  function stopRecording(button) {
+    recorder && recorder.stop();
+    button.disabled = true;
+    button.previousElementSibling.disabled = false;
+    __log('Stopped recording.');
+    
+    // create WAV download link using audio data blob
+    createDownloadLink();
+    
+    recorder.clear();
+  }
+
+  function createDownloadLink() {
+    recorder && recorder.exportWAV(function(blob) {
+      /*var url = URL.createObjectURL(blob);
+      var li = document.createElement('li');
+      var au = document.createElement('audio');
+      var hf = document.createElement('a');
+      
+      au.controls = true;
+      au.src = url;
+      hf.href = url;
+      hf.download = new Date().toISOString() + '.wav';
+      hf.innerHTML = hf.download;
+      li.appendChild(au);
+      li.appendChild(hf);
+      recordingslist.appendChild(li);*/
     });
- 
-    function setupAudioNodes(stream) {
-        // create the media stream from the audio input source (microphone)
-        sourceNode = audioContext.createMediaStreamSource(stream);
-        audioStream = stream;
- 
-        analyserNode   = audioContext.createAnalyser();
-        javascriptNode = audioContext.createScriptProcessor(sampleSize, 1, 1);
- 
-        // Create the array for the data values
-        amplitudeArray = new Uint8Array(analyserNode.frequencyBinCount);
- 
-        // setup the event handler that is triggered every time enough samples have been collected
-        // trigger the audio analysis and draw one column in the display based on the results
-        javascriptNode.onaudioprocess = function () {
- 
-            amplitudeArray = new Uint8Array(analyserNode.frequencyBinCount);
-            analyserNode.getByteTimeDomainData(amplitudeArray);
- 
-            // draw one column of the display
-            requestAnimFrame(drawTimeDomain);
-        }
- 
-        // Now connect the nodes together
-        // Do not connect source node to destination - to avoid feedback
-        sourceNode.connect(analyserNode);
-        analyserNode.connect(javascriptNode);
-        javascriptNode.connect(audioContext.destination);
+  }
+
+  window.onload = function init() {
+    try {
+      // webkit shim
+      window.AudioContext = window.AudioContext || window.webkitAudioContext;
+      navigator.getUserMedia = ( navigator.getUserMedia ||
+                       navigator.webkitGetUserMedia ||
+                       navigator.mozGetUserMedia ||
+                       navigator.msGetUserMedia);
+      window.URL = window.URL || window.webkitURL;
+      
+      audio_context = new AudioContext;
+      __log('Audio context set up.');
+      __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+    } catch (e) {
+      alert('No web audio support in this browser!');
     }
- 
-    function onError(e) {
-        console.log(e);
-    }
- 
-    function drawTimeDomain() {
-        var minValue = 9999999;
-        var maxValue = 0;
- 
-        for (var i = 0; i < amplitudeArray.length; i++) {
-            var value = amplitudeArray[i] / 256;
-            if(value > maxValue) {
-                maxValue = value;
-            } else if(value < minValue) {
-                minValue = value;
-            }
-        }
- 
-        var y_lo = canvasHeight - (canvasHeight * minValue) - 1;
-        var y_hi = canvasHeight - (canvasHeight * maxValue) - 1;
- 
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(column,y_lo, 1, y_hi - y_lo);
- 
-        // loop around the canvas when we reach the end
-        column += 1;
-        if(column >= canvasWidth) {
-            column = 0;
-            clearCanvas();
-        }
-    }
- 
-    function clearCanvas() {
-        column = 0;
-        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-        // ctx.beginPath();
-        ctx.strokeStyle = '#f00';
-        var y = (canvasHeight / 2) + 0.5;
-        ctx.moveTo(0, y);
-        ctx.lineTo(canvasWidth-1, y);
-        ctx.stroke();
-    }
- 
-</script>
+    
+    navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
+      __log('No live audio input: ' + e);
+    });
+  };
+  </script>
+
+  <% javascript_include_tag "recordmp3.js" %>
+-->

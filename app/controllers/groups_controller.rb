@@ -19,6 +19,10 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @teacher = Teacher.find(@group.teacher_id)
     @assignments = @group.assignments.all(params[:group_id])
+    begin
+    @submissions = @assignments[0].submissions.all
+    rescue
+    end
     @students = @group.students.all(params[:group_id])
   end
 

@@ -18,6 +18,8 @@ class SubmissionsController < ApplicationController
   def show
     @submission = Submission.find(params[:id])
     @assignment = Assignment.find(@submission.assignment_id)
+    @group = Group.find(@assignment.group_id)
+    @teacher = Teacher.find(@group.teacher_id)
   end
 
   def edit
@@ -42,7 +44,7 @@ class SubmissionsController < ApplicationController
 
   private
   def submission_params
-    params.require(:submission).permit(:description, :recording)
+    params.require(:submission).permit(:description, :recording, :name)
   end
 
 end

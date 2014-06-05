@@ -3,8 +3,8 @@ class SessionsController < ApplicationController
   end
 
   def create
-    teacher = Teacher.authenticate(params[:email], params[:password])
-    if user
+    teacher = Teacher.find_by_email(params[:email])
+    if teacher && teacher.authenticate(params[:password_digest])
       session[:teacher_id] = teacher.id
       redirect_to root_url, :notice => "Logged in!"
     else

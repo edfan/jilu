@@ -1,11 +1,15 @@
-<p>
-  <strong>Assignment Name:</strong>
-  <%= @assignment.name %>
-</p>
+<h1><%= @teacher.name %>'s <%= @group.name %></h1>
+
+<h3><%= @assignment.name %></h3>
 
 <p>
   <strong>Assignment Description:</strong>
   <%= @assignment.description %>
+</p>
+
+<p>
+  <strong>Submitter:</strong>
+  <%= @submission.name %>
 </p>
 
 <p>
