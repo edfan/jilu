@@ -10,11 +10,32 @@
 <%= csrf_meta_tags %></head>
 
 <body>
+<div id="Box">
+
+<div id="Banner">
+<h2><a href="/">Jilu</a></h2>
+</div>
+<div id="Sidebar">
+<ul>
+<li><a href="/teachers" title="List of all teachers.">Teachers</a></li>
+<li><a href="/sessions" title="List of all classes.">Classes</a></li>
+<li>&nbsp;</li>
+<li><a href="/sign_up" title="Teacher signup.">New Teacher</a></li>
+<li><a href="/log_in" title="Teacher login.">Teacher Login</a></li>
+<li>&nbsp;</li>
+<li><a href="https://github.com/Techonup/jilu/" title="GitHub page">GitHub</a></li>
+</ul>
+</div>
+
 <% flash.each do |name, msg| %>
     <%= content_tag :div, msg, :id => "flash#{name}" %>
   <% end %>
 
+<div id="Main">
+<div class="article">
 <%= yield %>
+</div>
+</div>
 
 </body>
 </html>
