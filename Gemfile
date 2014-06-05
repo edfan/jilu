@@ -45,3 +45,5 @@ gem 'bcrypt-ruby', '~> 3.1.2'
 # gem 'debugger', group: [:development, :test]
 
 gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
+
+gem 'rails_12factor'
