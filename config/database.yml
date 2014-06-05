@@ -3,8 +3,6 @@ development:
   encoding: unicode
   database: blog_development
   pool: 5
-  username: iss
-  password:
   min_messages: WARNING
   
 # Warning: The database defined as "test" will be erased and
@@ -15,8 +13,6 @@ test:
   encoding: unicode
   database: blog_test
   pool: 5
-  username: iss
-  password:
   min_messages: WARNING
 
 production:
@@ -24,6 +20,4 @@ production:
   encoding: unicode
   database: blog_production
   pool: 5
-  username: iss
-  password:
   min_messages: WARNING
