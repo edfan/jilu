@@ -3,9 +3,16 @@
 <head>
 <title>Jilu</title>
 <%= stylesheet_link_tag "application" %>
-<%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" %>
+<%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" %>
 <%= javascript_include_tag "application" %>
 <%= csrf_meta_tags %>
+
+<script type="text/javascript">
+    var enforce = "jilu.herokuapp.com";
+    if ((enforce == window.location.host) && (window.location.protocol != "https:"))
+      window.location.protocol = "https";
+</script>
+
 
 <% if content_for? :for_head %>
     <%= yield :for_head %>
