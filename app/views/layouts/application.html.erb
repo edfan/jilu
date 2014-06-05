@@ -4,10 +4,12 @@
 <title>Jilu</title>
 <%= stylesheet_link_tag "application" %>
 <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" %>
-
-<%= javascript_include_tag "http://techonup.github.io/script.js" %>
 <%= javascript_include_tag "application" %>
-<%= csrf_meta_tags %></head>
+<%= csrf_meta_tags %>
+
+<% if content_for? :for_head %>
+    <%= yield :for_head %>
+<% end %></head>
 
 <body>
 <div id="Box">
@@ -29,7 +31,7 @@
 
 <% flash.each do |name, msg| %>
     <%= content_tag :div, msg, :id => "flash#{name}" %>
-  <% end %>
+<% end %>
 
 <div id="Main">
 <div class="article">
