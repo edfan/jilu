@@ -1,28 +1,29 @@
-== README
+== Jilu
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Jilu is a service that factilitates online audio-based assignments using JavaScript and HTML5. 
 
-Things you may want to cover:
+== Setup
 
-* Ruby version
+* Install bundler with <tt>gem install bundler</tt>.
 
-* System dependencies
+* Install gems with <tt>bundle install</tt>.
 
-* Configuration
+* (Optional) Specify database (PostgreSQL by default).
 
-* Database creation
+* (Optional) Specify webserver (WEBrick by default).
 
-* Database initialization
+* Create database with <tt>rake db:create</tt> after initializing database.
 
-* How to run the test suite
+* Run locally with <tt>rails server</tt> and access Jilu at http://localhost:3000
 
-* Services (job queues, cache servers, search engines, etc.)
+== Credits
 
-* Deployment instructions
+* Matt Diamond for [Recorder.js](https://github.com/mattdiamond/Recorderjs).
 
-* ...
+* Thibault Imbert for his [getUserMedia() demo](http://typedarray.org/from-microphone-to-wav-with-getusermedia-and-web-audio/).
 
+* John Gruber at [Daring Fireball](http://daringfireball.net/) for the basis of the site's CSS.
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+== License
+
+Jilu is released under the terms of the [MIT License](http://opensource.org/licenses/MIT).
